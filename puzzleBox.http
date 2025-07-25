@@ -1,0 +1,6 @@
+@puzzleBox_HostAddress = http://localhost:5248
+
+GET {{puzzleBox_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

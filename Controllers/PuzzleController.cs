@@ -24,10 +24,10 @@ public class PuzzleController : ControllerBase
         });
     }
 
-    [HttpPost("level1")]
-    public ActionResult<PuzzleResponse> SolveLevel1([FromBody] PuzzleRequest request)
+    [HttpPost("solvelevel1")]
+    public IActionResult SolveLevel1([FromBody] PuzzleRequest request)
     {
-        var result = _puzzleService.SolveLevel1(request.Answer);
-        return Ok(result);
+        var response = _puzzleService.SolveLevel1(request);
+        return Ok(response);
     }
 }

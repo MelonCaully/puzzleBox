@@ -1,5 +1,6 @@
 using PuzzleBox.Services;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,15 @@ builder.Services.AddSwaggerGen(c =>
 // Register your custom services (e.g., IPuzzleService)
 builder.Services.AddScoped<IPuzzleService, PuzzleService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod(); // <-- Frontend dev server
+    });
+});
 var app = builder.Build();
 
 // Middleware pipeline
@@ -21,6 +31,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors();
 }
 
 app.UseHttpsRedirection();

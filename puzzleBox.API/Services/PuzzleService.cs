@@ -29,6 +29,15 @@ public class PuzzleService : IPuzzleService
             };
         }
     }
+
+    public PuzzleResponse SolveLevel2(PuzzleRequest request)
+    {
+        return new PuzzleResponse
+        {
+            Message = "Correct! Proceed to api/puzzle/level3",
+            Success = true
+        };
+    }
     
     private string ComputeSha256Hash(string rawData)
     {

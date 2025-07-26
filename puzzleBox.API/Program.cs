@@ -41,3 +41,5 @@ app.UseAuthorization();
 app.MapControllers(); // Maps attribute-routed controllers like PuzzleController
 
 app.Run();
+
+public partial class Program { }

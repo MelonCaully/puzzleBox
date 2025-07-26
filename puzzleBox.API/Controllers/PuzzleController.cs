@@ -24,7 +24,7 @@ public class PuzzleController : ControllerBase
         });
     }
 
-    [HttpPost("solvelevel1")]
+    [HttpPost("level1")]
     public IActionResult SolveLevel1([FromBody] PuzzleRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.Answer))
@@ -42,5 +42,21 @@ public class PuzzleController : ControllerBase
             return BadRequest(response);
 
         return Ok(response);
+    }
+
+    [HttpPost("level2")]
+    public IActionResult SolveLevel2([FromBody] PuzzleRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Answer))
+        {
+            return BadRequest(new PuzzleResponse
+            {
+                Success = false,
+                Message = "Anser cannot be empty"
+            });
+        }
+
+        var repsonse = _puzzleService.SolveLevel2(request);
+        return Ok();
     }
 }

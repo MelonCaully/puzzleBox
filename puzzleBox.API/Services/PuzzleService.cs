@@ -8,10 +8,6 @@ public class PuzzleService : IPuzzleService
 {
     public PuzzleResponse SolveLevel1(PuzzleRequest request)
     {
-        if (string.IsNullOrWhiteSpace(request.Answer))
-        {
-            return new PuzzleResponse { Message = "Answer cannot be empty" };
-        }
 
         string correct = ComputeSha256Hash("boot.dev");
 
@@ -20,6 +16,7 @@ public class PuzzleService : IPuzzleService
             return new PuzzleResponse
             {
                 Message = "Correct! Proceed to /api/puzzle/level2",
+                Success = true,
                 Level = 2
             };
         }
@@ -27,7 +24,8 @@ public class PuzzleService : IPuzzleService
         {
             return new PuzzleResponse
             {
-                Message = "Incorrect. Try Again"
+                Message = "Incorrect. Try Again",
+                Success = false
             };
         }
     }

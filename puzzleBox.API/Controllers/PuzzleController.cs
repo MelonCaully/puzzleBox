@@ -27,7 +27,20 @@ public class PuzzleController : ControllerBase
     [HttpPost("solvelevel1")]
     public IActionResult SolveLevel1([FromBody] PuzzleRequest request)
     {
+        if (string.IsNullOrWhiteSpace(request.Answer))
+        {
+            return BadRequest(new PuzzleResponse
+            {
+                Success = false,
+                Message = "Answer cannot be empty."
+            });
+        }
+
         var response = _puzzleService.SolveLevel1(request);
+
+        if (!response.Success)
+            return BadRequest(response);
+
         return Ok(response);
     }
 }

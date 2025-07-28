@@ -3,7 +3,7 @@ services:
     name: puzzlebox-api
     env: dotnet
     plan: free
-    region: oregon
+    region: ohio
     buildCommand: "dotnet publish -c Release -o publish"
     startCommand: "dotnet out/PuzzleBox.dll --urls http://0.0.0.0:$PORT"
     envVars:

@@ -60,6 +60,9 @@ public class PuzzleController : ControllerBase
             case 2:
                 response = _puzzleService.SolveLevel2(request);
                 break;
+            case 3:
+                response = _puzzleService.SolveLevel3(request);
+                break;
             default:
                 return BadRequest(new PuzzleResponse
                 {

@@ -26,11 +26,21 @@ public class PuzzleService : IPuzzleService
             {
                 Id = 2,
                 Title = "Hex ASCII Decryption",
-                Description = "Decrypt the following using hexidecimal then follow up with ASCII: 70 72 49 6d 45 41 67 45 6e",
+                Description = "Hex color #7072496d454167456e hides a word when converted to ASCII. What is it?",
                 Difficulty = "Medium",
                 Points = 200,
                 Clue = "",
                 Answer = "prImEAgEn"
+            },
+            new ChallengeDTO
+            {
+                Id = 3,
+                Title = "Morse API Call",
+                Description = "Translate the following Morse code: .... .- -.-. -.- .- - .... --- -.",
+                Difficulty = "Medium",
+                Points = 200,
+                Clue = "",
+                Answer = "HACKATHON"
             }
         };
     }
@@ -65,6 +75,28 @@ public class PuzzleService : IPuzzleService
     public PuzzleResponse SolveLevel2(PuzzleRequest request)
     {
         string correct = "prImEAgEn";
+
+        if (request.Answer.Trim() == correct)
+        {
+            return new PuzzleResponse
+            {
+                Message = "Correct!",
+                Success = true
+            };
+        }
+        else
+        {
+            return new PuzzleResponse
+            {
+                Message = "Incorrect. Try Again",
+                Success = false
+            };
+        }
+    }
+
+    public PuzzleResponse SolveLevel3(PuzzleRequest request)
+    {
+        string correct = "HACKATHON";
 
         if (request.Answer.Trim() == correct)
         {

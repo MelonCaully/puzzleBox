@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins("https://cyber-mauve.vercel.app")
               .AllowAnyHeader()
               .AllowAnyMethod(); // <-- Frontend dev server
     });
@@ -31,16 +31,18 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseCors();
-
 app.MapControllers(); // Maps attribute-routed controllers like PuzzleController
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Urls.Add($"http://0.0.0.0:{port}");
 
 app.Run();
 

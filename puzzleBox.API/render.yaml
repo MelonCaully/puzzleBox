@@ -4,8 +4,8 @@ services:
     env: dotnet
     plan: free
     region: ohio
-    buildCommand: "dotnet publish -c Release -o publish"
-    startCommand: "dotnet publish/PuzzleBox.dll --urls http://0.0.0.0:$PORT"
+    buildCommand: "dotnet out -c Release -o publish"
+    startCommand: "dotnet out/puzzleBox.dll --urls http://0.0.0.0:$PORT"
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production

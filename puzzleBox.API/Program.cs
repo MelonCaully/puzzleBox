@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("https://localhost:3000")
+        policy.WithOrigins("http://localhost:3000")
               .AllowAnyHeader()
               .AllowAnyMethod(); // <-- Frontend dev server
     });
@@ -37,6 +37,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors();
 
 app.MapControllers(); // Maps attribute-routed controllers like PuzzleController
 

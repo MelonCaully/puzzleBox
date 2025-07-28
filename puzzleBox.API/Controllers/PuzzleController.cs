@@ -15,17 +15,31 @@ public class PuzzleController : ControllerBase
         _puzzleService = puzzleService;
     }
 
-    [HttpGet("start")]
-    public IActionResult Start()
+    [HttpGet("challenge/{id}")]
+    public IActionResult GetChallenge(int id)
     {
-        return Ok(new PuzzleStartResponse
+        var challenge = _puzzleService.GetChallengeById(id);
+
+        if (challenge == null)
         {
-            Message = "Welcome to the Puzzle Box! To begin, send a POST to /api/puzzle/level1 with the SHA256 hash of the word 'start'."
+            return NotFound(new { message = "Challenge not found." });
+        }
+
+        // Strip the answer field before returning to the frontend
+        return Ok(new
+        {
+            challenge.Id,
+            challenge.Title,
+            challenge.Description,
+            challenge.Difficulty,
+            challenge.Points,
+            challenge.Clue,
+            iconKey = challenge.Id 
         });
     }
 
-    [HttpPost("level1")]
-    public IActionResult SolveLevel1([FromBody] PuzzleRequest request)
+    [HttpPost("level{levelId:int}")]
+    public IActionResult SolveChallenge(int levelId, [FromBody] PuzzleRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.Answer))
         {
@@ -36,27 +50,27 @@ public class PuzzleController : ControllerBase
             });
         }
 
-        var response = _puzzleService.SolveLevel1(request);
+        PuzzleResponse response;
+
+        switch (levelId)
+        {
+            case 1:
+                response = _puzzleService.SolveLevel1(request);
+                break;
+            case 2:
+                response = _puzzleService.SolveLevel2(request);
+                break;
+            default:
+                return BadRequest(new PuzzleResponse
+                {
+                    Success = false,
+                    Message = $"Level {levelId} is not implemented."
+                });
+        }
 
         if (!response.Success)
             return BadRequest(response);
 
         return Ok(response);
-    }
-
-    [HttpPost("level2")]
-    public IActionResult SolveLevel2([FromBody] PuzzleRequest request)
-    {
-        if (string.IsNullOrWhiteSpace(request.Answer))
-        {
-            return BadRequest(new PuzzleResponse
-            {
-                Success = false,
-                Message = "Anser cannot be empty"
-            });
-        }
-
-        var repsonse = _puzzleService.SolveLevel2(request);
-        return Ok();
     }
 }
